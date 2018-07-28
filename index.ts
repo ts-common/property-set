@@ -25,10 +25,18 @@ function fromMutableOptional<T>(v: MutableOptional<T>): T {
     return v as T
 }
 
+function setProperty<T, K extends keyof T>(
+    result: MutableOptional<T>, k: K, v: T[K] | undefined,
+): void {
+    if (v !== undefined) {
+        result[k] = v
+    }
+}
+
 export function create<T>(factory: Factory<T>): T {
     const result: MutableOptional<T> = {}
     forEach(factory, (k, propertyFactory) => {
-        result[k] = propertyFactory(k)
+        setProperty(result, k, propertyFactory(k))
     })
     return fromMutableOptional(result)
 }
@@ -40,12 +48,12 @@ export type PartialFactory<T> = {
 export function copyCreate<T>(source: T, factory: PartialFactory<T>): T {
     const result: MutableOptional<T> = {}
     forEach(source, (k, v) => {
-        result[k] = v
+        setProperty(result, k, v)
     })
     forEach(factory, (k, propertyFactory) => {
         // tslint:disable-next-line:strict-type-predicates
         if (propertyFactory !== undefined) {
-            result[k] = propertyFactory(k, source[k])
+            setProperty(result, k, propertyFactory(k, source[k]))
         }
     })
     return fromMutableOptional(result)
