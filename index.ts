@@ -30,6 +30,9 @@ function setProperty<T, K extends keyof T>(
 ): void {
     if (v !== undefined) {
         result[k] = v
+    } else {
+        // tslint:disable-next-line:no-dynamic-delete
+        delete result[k]
     }
 }
 

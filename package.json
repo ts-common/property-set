@@ -1,6 +1,6 @@
 {
   "name": "@ts-common/property-set",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A set of properties",
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,12 @@
     "index.d.ts"
   ],
   "homepage": "https://github.com/ts-common/property-set#readme",
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text"
+    ]
+  },
   "devDependencies": {
     "@types/chai": "^4.1.4",
     "@types/mocha": "^5.2.5",

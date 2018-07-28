@@ -9,6 +9,7 @@ interface A {
     s: string
     r?: boolean
     multi: number
+    u: true | undefined
 }
 
 describe("test", () => {
@@ -18,17 +19,20 @@ describe("test", () => {
             s: () => "xxx",
             r: () => undefined,
             multi: () => 9,
+            u: () => true,
         })
         assert.equal(54, result.n)
         assert.equal("xxx", result.s)
         assert.isUndefined(result.r)
         assert.equal(9, result.multi)
+        assert.isTrue(result.u)
     })
     it("copyCreate", () => {
         const source: A = {
             n: 25,
             s: "yyy",
             multi: 19,
+            u: true,
         }
         const result = ps.copyCreate(
             source,
@@ -36,10 +40,12 @@ describe("test", () => {
                 s: () => "xxx",
                 r: () => true,
                 multi: (_: "multi", v: number) => v + v,
+                u: () => undefined,
             })
         assert.equal(25, result.n)
         assert.equal("xxx", result.s)
         assert.isTrue(result.r)
         assert.equal(38, result.multi)
+        assert.isUndefined(result.u)
     })
 })
