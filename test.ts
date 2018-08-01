@@ -48,4 +48,18 @@ describe("test", () => {
         assert.equal(38, result.multi)
         assert.isUndefined(result.u)
     })
+    it("no changes", () => {
+        const source: A = {
+            n: 25,
+            s: "yyy",
+            multi: 19,
+            u: true,
+        }
+        const result = ps.copyCreate(
+            source,
+            {
+                s: (_: "s", v: string) => v,
+            })
+        assert.strictEqual(source, result)
+    })
 })
