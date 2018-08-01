@@ -57,10 +57,10 @@ export function copyCreate<T>(source: T, factory: PartialFactory<T>): T {
     forEach(factory, (k, propertyFactory) => {
         // tslint:disable-next-line:strict-type-predicates
         if (propertyFactory !== undefined) {
-            const sourceK = source[k]
-            const newProperty = propertyFactory(k, sourceK)
-            if (sourceK !== newProperty) {
-                setProperty(result, k, newProperty)
+            const sourceValue = source[k]
+            const newValue = propertyFactory(k, sourceValue)
+            if (sourceValue !== newValue) {
+                setProperty(result, k, newValue)
                 changes = true
             }
         }
