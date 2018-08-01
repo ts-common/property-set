@@ -58,7 +58,8 @@ describe("test", () => {
         const result = ps.copyCreate(
             source,
             {
-                s: (_: "s", v: string) => v,
+                s: ps.copyProperty(source),
+                multi: undefined,
             })
         assert.strictEqual(source, result)
     })
