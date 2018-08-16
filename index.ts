@@ -1,9 +1,9 @@
-export type MapFunc<T, R> = <K extends keyof T>(k: K, v: T[K]) => R
+export type MapFunc<T, R> = <K extends keyof T>(v: T[K], k: K) => R
 
-export function forEach<T>(source: T, func: MapFunc<T, void>): void {
+export const forEach = <T>(source: T, func: MapFunc<T, void>): void => {
     // tslint:disable-next-line:forin
     for (const key in source) {
-        func(key, source[key])
+        func(source[key], key)
     }
 }
 
@@ -13,21 +13,20 @@ export type Factory<T> = {
     readonly [K in keyof T]-?: PropertyFactory<T, K>
 }
 
-export function copyProperty<T>(value: T): <K extends keyof T>(k: K) => T[K] {
-    return (k) => value[k]
-}
+export const copyProperty = <T>(value: T): (<K extends keyof T>(k: K) => T[K]) =>
+    (k) => value[k]
 
 export type MutableOptional<T> = {
     [K in keyof T]?: T[K]
 }
 
-function fromMutableOptional<T>(v: MutableOptional<T>): T {
-    return v as T
-}
+const fromMutableOptional = <T>(v: MutableOptional<T>): T => v as T
 
-function setProperty<T, K extends keyof T>(
-    result: MutableOptional<T>, k: K, v: T[K] | undefined,
-): void {
+const setProperty = <T, K extends keyof T>(
+    result: MutableOptional<T>,
+    k: K,
+    v: T[K] | undefined,
+): void => {
     if (v !== undefined) {
         result[k] = v
     } else {
@@ -36,29 +35,29 @@ function setProperty<T, K extends keyof T>(
     }
 }
 
-export function create<T>(factory: Factory<T>): T {
+export const create = <T>(factory: Factory<T>): T => {
     const result: MutableOptional<T> = {}
-    forEach(factory, (k, propertyFactory) => {
+    forEach(factory, (propertyFactory, k) => {
         setProperty(result, k, propertyFactory(k))
     })
     return fromMutableOptional(result)
 }
 
 export type PartialFactory<T> = {
-    readonly [K in keyof T]?: (k: K, v: T[K]) => T[K]
+    readonly [K in keyof T]?: (v: T[K], k: K) => T[K]
 }
 
-export function copyCreate<T>(source: T, factory: PartialFactory<T>): T {
+export const copyCreate = <T>(source: T, factory: PartialFactory<T>): T => {
     const result: MutableOptional<T> = {}
-    forEach(source, (k, v) => {
+    forEach(source, (v, k) => {
         setProperty(result, k, v)
     })
     let changes = false
-    forEach(factory, (k, propertyFactory) => {
+    forEach(factory, (propertyFactory, k) => {
         // tslint:disable-next-line:strict-type-predicates
         if (propertyFactory !== undefined) {
             const sourceValue = source[k]
-            const newValue = propertyFactory(k, sourceValue)
+            const newValue = propertyFactory(sourceValue, k)
             if (sourceValue !== newValue) {
                 setProperty(result, k, newValue)
                 changes = true

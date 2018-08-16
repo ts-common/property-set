@@ -14,8 +14,14 @@ interface A {
 
 describe("test", () => {
     it("create", () => {
+        const x: A = {
+            n: 54,
+            s: "",
+            multi: 0,
+            u: undefined,
+        }
         const result = ps.create<A>({
-            n: () => 54,
+            n: ps.copyProperty(x),
             s: () => "xxx",
             r: () => undefined,
             multi: () => 9,
@@ -39,7 +45,7 @@ describe("test", () => {
             {
                 s: () => "xxx",
                 r: () => true,
-                multi: (_: "multi", v: number) => v + v,
+                multi: (v: number, _: "multi") => v + v,
                 u: () => undefined,
             })
         assert.equal(25, result.n)
@@ -58,7 +64,7 @@ describe("test", () => {
         const result = ps.copyCreate(
             source,
             {
-                s: ps.copyProperty(source),
+                s: () => "yyy",
                 multi: undefined,
             })
         assert.strictEqual(source, result)
