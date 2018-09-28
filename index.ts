@@ -22,7 +22,7 @@ export type MutableOptional<T> = {
 
 const fromMutableOptional = <T>(v: MutableOptional<T>): T => v as T
 
-const setProperty = <T, K extends keyof T>(
+export const setMutableProperty = <T, K extends keyof T>(
     result: MutableOptional<T>,
     k: K,
     v: T[K] | undefined,
@@ -37,9 +37,10 @@ const setProperty = <T, K extends keyof T>(
 
 export const create = <T>(factory: Factory<T>): T => {
     const result: MutableOptional<T> = {}
-    forEach(factory, (propertyFactory, k) => {
-        setProperty(result, k, propertyFactory(k))
-    })
+    forEach(
+        factory,
+        (propertyFactory, k) => { setMutableProperty(result, k, propertyFactory(k)) },
+    )
     return fromMutableOptional(result)
 }
 
@@ -50,7 +51,7 @@ export type PartialFactory<T> = {
 export const copyCreate = <T>(source: T, factory: PartialFactory<T>): T => {
     const result: MutableOptional<T> = {}
     forEach(source, (v, k) => {
-        setProperty(result, k, v)
+        setMutableProperty(result, k, v)
     })
     let changes = false
     forEach(factory, (propertyFactory, k) => {
@@ -59,7 +60,7 @@ export const copyCreate = <T>(source: T, factory: PartialFactory<T>): T => {
             const sourceValue = source[k]
             const newValue = propertyFactory(sourceValue, k)
             if (sourceValue !== newValue) {
-                setProperty(result, k, newValue)
+                setMutableProperty(result, k, newValue)
                 changes = true
             }
         }
