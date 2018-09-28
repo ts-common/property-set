@@ -22,16 +22,24 @@ export type MutableOptional<T> = {
 
 const fromMutableOptional = <T>(v: MutableOptional<T>): T => v as T
 
+/**
+ * Use this functions to assign optional properties.
+ * The function will delete the property `k` if the given value is `undefined`.
+ *
+ * @param mutable an object
+ * @param k a name of property
+ * @param v a property value
+ */
 export const setMutableProperty = <T, K extends keyof T>(
-    result: MutableOptional<T>,
+    mutable: MutableOptional<T>,
     k: K,
     v: T[K] | undefined,
 ): void => {
     if (v !== undefined) {
-        result[k] = v
+        mutable[k] = v
     } else {
         // tslint:disable-next-line:no-dynamic-delete
-        delete result[k]
+        delete mutable[k]
     }
 }
 
