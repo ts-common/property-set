@@ -75,5 +75,7 @@ describe("test", () => {
         const mx = ps.asMutable(x)
         mx.a = "hello"
         mx.b = undefined
+        assert.strictEqual(mx.a, "hello")
+        assert.strictEqual(mx.b, undefined)
     })
 })
