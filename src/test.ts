@@ -69,4 +69,11 @@ describe("test", () => {
             })
         assert.strictEqual(source, result)
     })
+    it("asMutable", () => {
+        interface X { readonly a: string; readonly b?: number }
+        const x: X = { a: "ee" }
+        const mx = ps.asMutable(x)
+        mx.a = "hello"
+        mx.b = undefined
+    })
 })
