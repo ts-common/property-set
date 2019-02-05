@@ -16,6 +16,10 @@ export type Factory<T> = {
 export const copyProperty = <T>(value: T): (<K extends keyof T>(k: K) => T[K]) =>
     (k) => value[k]
 
+export type Mutable<T> = {
+    -readonly [K in keyof T]: T[K]
+}
+
 export type MutableOptional<T> = {
     [K in keyof T]?: T[K]
 }
@@ -75,3 +79,5 @@ export const copyCreate = <T>(source: T, factory: PartialFactory<T>): T => {
     })
     return changes ? fromMutableOptional(result) : source
 }
+
+export const asMutable = <T>(source: T): Mutable<T> => source as Mutable<T>
