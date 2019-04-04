@@ -1,6 +1,6 @@
 {
   "name": "@ts-common/property-set",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "description": "A set of properties",
   "main": "dist/index.js",
   "scripts": {
@@ -37,12 +37,12 @@
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.5",
+    "@types/mocha": "^5.2.6",
     "chai": "^4.2.0",
-    "mocha": "^5.2.0",
-    "nyc": "^13.2.0",
-    "tslint": "^5.12.1",
-    "typescript": "^3.3.1"
+    "mocha": "^6.0.2",
+    "nyc": "^13.3.0",
+    "tslint": "^5.15.0",
+    "typescript": "^3.4.1"
   },
   "dependencies": {}
 }
