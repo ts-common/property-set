@@ -1,12 +1,12 @@
 {
   "name": "@ts-common/property-set",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "description": "A set of properties",
   "main": "dist/index.js",
   "scripts": {
     "tsc": "tsc",
     "tslint": "tslint --project .",
-    "test": "tsc && npm run tslint && nyc mocha ./dist/test.js",
+    "test": "tsc && nyc mocha ./dist/test.js",
     "prepack": "npm install && tsc"
   },
   "repository": {
@@ -17,7 +17,7 @@
     "property set"
   ],
   "author": "",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ts-common/property-set/issues"
   },
@@ -36,11 +36,11 @@
     ]
   },
   "devDependencies": {
-    "@types/chai": "^4.1.7",
+    "@types/chai": "^4.2.13",
     "@types/mocha": "^5.2.6",
     "chai": "^4.2.0",
     "mocha": "^6.0.2",
-    "nyc": "^13.3.0",
+    "nyc": "^15.0.0",
     "tslint": "^5.15.0",
     "typescript": "^3.4.1"
   },
